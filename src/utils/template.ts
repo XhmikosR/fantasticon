@@ -8,7 +8,7 @@ export const TEMPLATE_HELPERS: Record<string, Function> = {
 };
 
 export type CompileOptions = {
-  helpers?: { [key: string]: (...args: any[]) => string };
+  helpers?: Record<string, (...args: any[]) => string>;
 };
 
 export const renderTemplate = async (

@@ -6,7 +6,7 @@ const writeFileMock = (writeFile as any) as jest.Mock;
 jest.mock('path');
 jest.mock('glob');
 jest.mock('../../utils/fs-async', () => ({
-  writeFile: jest.fn(() => Promise.resolve())
+  writeFile: jest.fn(async () => Promise.resolve())
 }));
 
 describe('Assets utilities', () => {
@@ -24,7 +24,9 @@ describe('Assets utilities', () => {
     expect(paths).toBeInstanceOf(Array);
     expect(paths.length).toBeTruthy();
 
-    paths.forEach(path => expect(typeof path).toBe('string'));
+    paths.forEach(path => {
+      expect(typeof path).toBe('string');
+    });
   });
 
   test('`loadPaths` resolves an Array of the correct filepaths within the given directory', async () => {

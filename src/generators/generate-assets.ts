@@ -24,10 +24,12 @@ export const generateAssets = async (
       generated[dependsOn] = await generateAsset(dependsOn);
     }
 
-    return (generated[type] = await generator.generate(
+    generated[type] = await generator.generate(
       options,
       dependsOn ? generated[dependsOn] : null
-    ));
+    );
+
+    return generated[type];
   };
 
   for (const type of generateTypes) {

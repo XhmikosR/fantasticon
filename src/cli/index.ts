@@ -6,11 +6,7 @@ import { generateFonts } from '../core/runner';
 import { removeUndefined } from '../utils/validation';
 import { getLogger } from './logger';
 
-const {
-  bin,
-  name: packageName,
-  version
-} = require('../../package.json') as any;
+const { bin, name: packageName, version } = require('../../package.json');
 
 const getCommandName = () => (bin && Object.keys(bin)[0]) || packageName;
 
@@ -31,19 +27,17 @@ const cli = async () => {
   }
 };
 
-const printList = (available: { [key: string]: string }, defaults: string[]) =>
+const printList = (available: Record<string, string>, defaults: string[]) =>
   ` (default: ${defaults.join(', ')}, available: ${Object.values(
     available
   ).join(', ')})`;
 
 const printDefaultValue = (value: any) => {
-  let printVal = String(value);
-
   if (typeof value === 'undefined') {
     return '';
   }
 
-  return ` (default: ${printVal})`;
+  return ` (default: ${String(value)})`;
 };
 
 const printDefaultOption = (key: string) =>
@@ -155,6 +149,6 @@ const buildOptions = async (cmd: commander.Command, loadedConfig = {}) => {
   };
 };
 
-const run = async (options: any) => await generateFonts(options, true);
+const run = async (options: any) => generateFonts(options, true);
 
 cli();

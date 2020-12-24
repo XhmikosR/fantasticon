@@ -4,8 +4,8 @@ import { FontGenerator } from '../../types/generator';
 
 type GglyphStream = ReadStream & { metadata?: any };
 
-const generator: FontGenerator<void> = {
-  generate: ({
+const generator: FontGenerator = {
+  generate: async ({
     name: fontName,
     fontHeight,
     descent,
@@ -25,8 +25,13 @@ const generator: FontGenerator<void> = {
         log: () => null,
         ...svg
       })
-        .on('data', data => (font = Buffer.concat([font, data])))
-        .on('end', () => resolve(font.toString()));
+        .on('data', data => {
+          font = Buffer.concat([font, data]);
+          return font;
+        })
+        .on('end', () => {
+          resolve(font.toString());
+        });
 
       for (const { id, absolutePath } of Object.values(assets)) {
         const glyph: GglyphStream = createReadStream(absolutePath);
@@ -37,7 +42,10 @@ const generator: FontGenerator<void> = {
           ligature += String.fromCharCode(id.charCodeAt(i));
         }
 
-        glyph.metadata = { name: id, unicode: [unicode, ligature] };
+        glyph.metadata = {
+          name: id,
+          unicode: [unicode, ligature]
+        };
 
         fontStream.write(glyph);
       }

@@ -7,7 +7,7 @@ export const parseNumeric = (value: string) => {
     (typeof value !== 'number' && typeof value !== 'string') ||
     Number.isNaN(out)
   ) {
-    throw new Error(`${value} is not a valid number`);
+    throw new TypeError(`${value} is not a valid number`);
   }
 
   return out;
@@ -15,7 +15,7 @@ export const parseNumeric = (value: string) => {
 
 export const parseString = (value: string) => {
   if (typeof value !== 'string') {
-    throw new Error(`${value} is not a string`);
+    throw new TypeError(`${value} is not a string`);
   }
 
   return value;
@@ -51,9 +51,13 @@ export const removeUndefined = (object: Object) => {
 export const parseBoolean = (val: any) => {
   if (typeof val === 'string' && ['1', '0', 'true', 'false'].includes(val)) {
     return val === 'true' || val === '1';
-  } else if (typeof val === 'number' && [0, 1].includes(val)) {
+  }
+
+  if (typeof val === 'number' && [0, 1].includes(val)) {
     return val === 1;
-  } else if (typeof val === 'boolean') {
+  }
+
+  if (typeof val === 'boolean') {
     return val;
   }
 
@@ -65,7 +69,7 @@ const skipIfMatching = (match: any) => (fn: (value: any, cur?: any) => any) => (
 ) => (val === match ? match : fn(val));
 
 export const parseDir = async (dirname: string) => {
-  if ((await checkPath(dirname, 'directory')) === false) {
+  if (!(await checkPath(dirname, 'directory'))) {
     throw new Error(`${dirname} is not a directory`);
   }
 

@@ -16,7 +16,7 @@ jest.mock('../../constants', () => ({
 }));
 
 jest.mock('../../generators', () => ({
-  generateAssets: jest.fn(options =>
+  generateAssets: jest.fn(async options =>
     Promise.resolve({ mockGenerated: { assets: {}, options } })
   )
 }));
@@ -26,8 +26,8 @@ jest.mock('../../generators/generator-options', () => ({
 }));
 
 jest.mock('../../utils/assets', () => ({
-  writeAssets: jest.fn(() => Promise.resolve([{ mock: 'writeResult' }])),
-  loadAssets: jest.fn(() => Promise.resolve({ mock: 'assets' }))
+  writeAssets: jest.fn(async () => Promise.resolve([{ mock: 'writeResult' }])),
+  loadAssets: jest.fn(async () => Promise.resolve({ mock: 'assets' }))
 }));
 
 jest.mock('../config-parser', () => ({
@@ -82,7 +82,7 @@ describe('Runner', () => {
   test('`generateFonts` throws error if `outputDir` is not given and `mustWrite` is `true`', async () => {
     const optionsIn = { inputDir: 'foo' } as any;
 
-    await expect(() => generateFonts(optionsIn, true)).rejects.toThrow(
+    await expect(async () => generateFonts(optionsIn, true)).rejects.toThrow(
       'You must specify an output directory'
     );
   });
@@ -90,7 +90,7 @@ describe('Runner', () => {
   test('`generateFonts` throws error if `inputDir` is not given', async () => {
     const optionsIn = {} as any;
 
-    await expect(() => generateFonts(optionsIn)).rejects.toThrow(
+    await expect(async () => generateFonts(optionsIn)).rejects.toThrow(
       'You must specify an input directory'
     );
   });

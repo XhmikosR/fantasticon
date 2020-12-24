@@ -20,7 +20,7 @@ export interface RunnerResults {
   codepoints: CodepointsMap;
 }
 
-export const sanitiseOptions = (userOptions: any) =>
+export const sanitiseOptions = async (userOptions: any) =>
   parseConfig({
     ...DEFAULT_OPTIONS,
     ...userOptions

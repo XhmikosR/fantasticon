@@ -5,7 +5,7 @@ const generateEnumKeys = (assetKeys: string[]): Record<string, string> =>
   assetKeys
     .map(name => {
       const enumName = pascalCase(name);
-      const prefix = enumName.match(/^\d/) ? 'i' : '';
+      const prefix = /^\d/.exec(enumName) ? 'i' : '';
 
       return {
         [name]: `${prefix}${enumName}`
@@ -15,7 +15,7 @@ const generateEnumKeys = (assetKeys: string[]): Record<string, string> =>
 
 const generateEnums = (
   enumName: string,
-  enumKeys: { [eKey: string]: string },
+  enumKeys: Record<string, string>,
   quote = '"'
 ): string =>
   [
@@ -40,7 +40,7 @@ const generateConstant = ({
   enumName: string;
   literalIdName: string;
   literalKeyName: string;
-  enumKeys: { [eKey: string]: string };
+  enumKeys: Record<string, string>;
   codepoints: Record<string, number>;
   quote?: '"' | "'";
   kind: Record<string, boolean>;
@@ -86,8 +86,8 @@ const generator: FontGenerator = {
     assets,
     formatOptions: { ts } = {}
   }) => {
-    const quote = Boolean(ts?.singleQuotes) ? "'" : '"';
-    const generateKind: Record<string, boolean> = (Boolean(ts?.types?.length)
+    const quote = ts?.singleQuotes ? "'" : '"';
+    const generateKind: Record<string, boolean> = (ts?.types?.length
       ? ts.types
       : ['enum', 'constant', 'literalId', 'literalKey']
     )

@@ -8,11 +8,15 @@ export const getLogger = (debug = false, silent = false) => ({
 
     console.log(color.red(message));
 
-    debug && error instanceof Error && console.log(error.stack);
+    if (debug && error instanceof Error) {
+      console.log(error.stack);
+    }
   },
 
   log(...values: any[]) {
-    !silent && console.log(...values);
+    if (!silent) {
+      console.log(...values);
+    }
   },
 
   start(loadedConfigPath: string = null) {
