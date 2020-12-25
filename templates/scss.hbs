@@ -6,9 +6,10 @@ ${{ name }}-font: "{{ name }}";
 }
 
 {{# if selector }}
-{{ selector }}:before {
+{{ selector }}::before {
 {{ else }}
-{{ tag }}[class^="{{prefix}}-"]:before, {{ tag }}[class*=" {{prefix}}-"]:before {
+{{ tag }}[class^="{{prefix}}-"]::before,
+{{ tag }}[class*=" {{prefix}}-"]::before {
 {{/ if }}
   font-family: {{ name }} !important;
   font-style: normal;
@@ -28,9 +29,9 @@ ${{ name }}-map: (
 
 {{# each codepoints }}
 {{# if ../selector }}
-{{ ../selector }}.{{ ../prefix }}-{{ @key }}:before {
+{{ ../selector }}.{{ ../prefix }}-{{ @key }}::before {
 {{ else }}
-{{ tag }}.{{ ../prefix }}-{{ @key }}:before {
+{{ tag }}.{{ ../prefix }}-{{ @key }}::before {
 {{/ if }}
   content: map-get(${{ ../name }}-map, "{{ @key }}");
 }
