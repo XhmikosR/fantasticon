@@ -1,10 +1,10 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`\`HTML\` asset generator renders HTML correctly with prefix and tag name options 1`] = `
-"<!DOCTYPE html>
+"<!doctype html>
 <html lang=\\"en\\">
 <head>
-  <meta charset=\\"UTF-8\\">
+  <meta charset=\\"utf-8\\">
   <title>test-font</title>
 
   <style>
@@ -52,7 +52,7 @@ exports[`\`HTML\` asset generator renders HTML correctly with prefix and tag nam
     }
   </style>
 
-  <link rel=\\"stylesheet\\" type=\\"text/css\\" href=\\"test-font.css\\" />
+  <link rel=\\"stylesheet\\" href=\\"test-font.css\\">
 </head>
 <body>
   <h1>test-font</h1>
