@@ -1,6 +1,6 @@
 @font-face {
-    font-family: "{{ name }}";
-    src: {{{ fontSrc }}};
+  font-family: "{{ name }}";
+  src: {{{ fontSrc }}};
 }
 
 {{# if selector }}
@@ -8,14 +8,14 @@
 {{ else }}
 {{ tag }}[class^="{{prefix}}-"]:before, {{ tag }}[class*=" {{prefix}}-"]:before {
 {{/ if }}
-    font-family: {{ name }} !important;
-    font-style: normal;
-    font-weight: normal !important;
-    font-variant: normal;
-    text-transform: none;
-    line-height: 1;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
+  font-family: {{ name }} !important;
+  font-style: normal;
+  font-weight: normal !important;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 {{# each codepoints }}
@@ -24,6 +24,6 @@
 {{ else }}
 {{ tag }}.{{ ../prefix }}-{{ @key }}:before {
 {{/ if }}
-    content: "\\{{ codepoint this }}";
+  content: "\\{{ codepoint this }}";
 }
 {{/ each }}
